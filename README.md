@@ -1,7 +1,9 @@
+
 # libjson
 Simple cpp json library
     
 Usage:    
+```
 	json::Parse p;
 	json::Value* v = p.read(message);
 	if( v == NULL )
@@ -16,3 +18,4 @@ Usage:
 		fprintf(stderr,"Invalid opbject.\n");
 		return;
 	}
+```
