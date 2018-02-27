@@ -5,6 +5,10 @@ project(json)
 file(GLOB SOURCE "*.cpp" )
 add_library(json SHARED ${SOURCE})
 
+if(${BUILD_SHARED_LIBS})
+    install(TARGETS    json       DESTINATION /usr/local/lib )
+endif()
+
 target_include_directories(json PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 

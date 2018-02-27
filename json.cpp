@@ -1,5 +1,5 @@
 /*
-    This file is part of heos-cpp-api.
+    This file is part of libjson.
 
     MIT License
     Copyright (c) 2018 dreamz-group
