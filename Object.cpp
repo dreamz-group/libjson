@@ -25,7 +25,7 @@
 #include <sstream>
 
 #include "Object.h"
-#include "String.h"
+#include "JString.h"
 
 namespace json
 {

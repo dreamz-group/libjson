@@ -25,7 +25,7 @@
 #include <iostream>
 
 #include "Value.h"
-#include "String.h"
+#include "JString.h"
 #include "Number.h"
 #include "Array.h"
 #include "Object.h"

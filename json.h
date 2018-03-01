@@ -28,7 +28,7 @@
 
 #include "Value.h"
 #include "Number.h"
-#include "String.h"
+#include "JString.h" 
 #include "Bool.h"
 #include "Object.h"
 #include "Array.h"
