@@ -37,7 +37,8 @@ typedef enum
     ARRAY,
     STRING,
     NUMBER,
-    BOOL
+    BOOL,
+    NULL_TYPE
 } type_t;
 
 class Value
