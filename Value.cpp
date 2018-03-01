@@ -30,6 +30,7 @@
 #include "Array.h"
 #include "Object.h"
 #include "Bool.h"
+#include "Null.h"
 
 namespace json
 {
@@ -61,6 +62,10 @@ Value* Value::parse(uint8_t*& b, uint32_t& line)
     else if (*b == '{')
     {
         rtn = Object::parse(b, line);
+    }
+    else if( *b == 'n' || *b == 'N')
+    {
+        rtn = Null::parse(b, line);
     }
     else if( (rtn = Bool::parse(b, line)) != NULL )
     {

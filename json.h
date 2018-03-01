@@ -32,6 +32,7 @@
 #include "Bool.h"
 #include "Object.h"
 #include "Array.h"
+#include "Null.h"
 
 namespace json
 {
