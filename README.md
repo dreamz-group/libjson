@@ -15,7 +15,7 @@ Usage:
 	if( o == NULL )
 	{
 		delete v;
-		fprintf(stderr,"Invalid opbject.\n");
+		fprintf(stderr,"Invalid object.\n");
 		return;
 	}
 ```
