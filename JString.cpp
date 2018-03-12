@@ -23,7 +23,7 @@
     SOFTWARE.
 */
 #include <assert.h>
-
+#include <string.h>
 #include "JString.h"
 
 namespace json
@@ -36,7 +36,25 @@ String::String()
 
 String::String(const char* value)
 {
-    _value = value;
+    _value = "";
+    size_t len = strlen(value);
+    for (size_t i = 0; i < len; ++i)
+    {
+        switch (value[i])
+        {
+        case '\\':
+        case '"':
+        case '\t':
+        case '\n':
+        case '\f':
+        case '\r':
+            _value += "\\";
+            break;
+        default:
+            break;
+        }
+        _value += value[i];
+    }
 }
 
 String::~String()
@@ -69,8 +87,11 @@ bool String::parse_string(std::string& id, uint8_t*& b, uint32_t& line)
     ++b;
     id = "";
 
-    while ((*b == ' ') ||
-           (*b == '!') ||           
+    while ((*b == ' ')  ||
+           (*b == '!')  ||
+           (*b == '\n') ||
+           (*b == '\t') ||
+           (*b == '\r') ||
            (*b >= '#' && *b <= '~'))
     {
         if( *b == '\\')
