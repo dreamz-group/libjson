@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(json)
 
 file(GLOB SOURCE "*.cpp" )
-add_library(json SHARED ${SOURCE})
+add_library(json ${SOURCE})
 
 if(${BUILD_SHARED_LIBS})
     install(TARGETS    json       DESTINATION /usr/local/lib )
