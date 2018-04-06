@@ -103,6 +103,20 @@ std::string Array::str() const
     return sstr.str();
 }
 
+Value* Array::operator[](unsigned int index)
+{
+    if( _items.size() > index )
+    {
+        return _items[index];
+    }
+    return NULL;
+}
+
+size_t Array::length()
+{
+    return _items.size();
+}
+
 std::ostream& operator<<(std::ostream& os, const Array* arr)
 {
     os << "[" << std::endl;
