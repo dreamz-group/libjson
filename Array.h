@@ -39,7 +39,8 @@ public:
     virtual type_t getType() const;
     static Value* parse(uint8_t*& b, uint32_t& line);
     virtual std::string str() const;
-
+    Value* operator[](unsigned int index);
+    size_t length();
 protected:
     typedef std::vector<Value*> VALUES;
     VALUES _items;
