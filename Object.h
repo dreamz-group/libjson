@@ -50,6 +50,8 @@ public:
     bool key(unsigned int index, std::string& out);
 
     void Add(const std::string& name, Value* value);
+    void Add(const std::string& name, const char* value);
+    void Add(const std::string& name, const std::string& value);
 
 protected:
     typedef std::pair<std::string, Value*> VALUE;

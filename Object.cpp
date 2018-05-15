@@ -48,6 +48,16 @@ type_t Object::getType() const
     return OBJECT;
 }
 
+void Object::Add(const std::string& name, const std::string& value)
+{
+    _items.push_back(VALUE(name, new json::String(value.c_str())));
+}
+
+void Object::Add(const std::string& name, const char* value)
+{
+    _items.push_back(VALUE(name, new json::String(value)));
+}
+
 void Object::Add(const std::string& name, Value* value)
 {
     _items.push_back(VALUE(name, value));
@@ -126,9 +136,20 @@ Value* Object::parse(uint8_t*& b, uint32_t& line)
 
 std::string Object::str() const
 {
-    std::stringstream sstr;
-    sstr << this;
-    return sstr.str();
+    std::stringstream os;
+    os << "{" ;
+    json::Object::VALUES::const_iterator itr = this->_items.begin();
+    while (itr != this->_items.end())
+    {
+        os << "\"" << itr->first << "\" : " << itr->second;
+        ++itr;
+        if (itr != this->_items.end())
+        {
+            os << "," ;
+        }
+    }
+    os << "}";
+    return os.str();    
 }
 
 std::ostream& operator<<(std::ostream& os, const Object* obj)
@@ -141,7 +162,7 @@ std::ostream& operator<<(std::ostream& os, const Object* obj)
         ++itr;
         if (itr != obj->_items.end())
         {
-            os << "," << std::endl;
+            os << ","  << std::endl;
         }
         else
         {

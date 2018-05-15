@@ -48,7 +48,7 @@ String::String(const char* value)
         case '\n':
         case '\f':
         case '\r':
-            _value += "\\";
+            _value += '\\';
             break;
         default:
             break;
