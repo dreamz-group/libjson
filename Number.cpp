@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <math.h>
 #include <sstream>
+#include <limits.h>
 
 #include "Number.h"
 
@@ -63,6 +64,20 @@ uint64_t Number::value()
 type_t Number::getType() const
 {
     return NUMBER;
+}
+
+Number::operator int() const
+{
+    if( _type == INT64 && _value.i < INT_MAX )
+    {
+        return (int)_value.i;
+    }
+    if( _type == UINT64 && _value.ui < INT_MAX )
+    {
+        return (int)_value.ui;
+    }
+    std::cerr << "Can not be casted to int!" << std::endl;
+    return INT_MAX;    
 }
 
 Value* Number::parse(uint8_t*& b, uint32_t& line)
