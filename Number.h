@@ -55,6 +55,7 @@ public:
     virtual std::string str() const;
     static Value* parse(uint8_t*& b, uint32_t& line);
     uint64_t value();
+    operator int() const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Number* obj);
     static inline bool digit(uint8_t*& b, uint64_t& value)
