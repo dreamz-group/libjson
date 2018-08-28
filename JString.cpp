@@ -91,9 +91,14 @@ bool String::parse_string(std::string& id, uint8_t*& b, uint32_t& line)
            (*b == '!')  ||
            (*b == '\n') ||
            (*b == '\t') ||
-           (*b == '\r') ||
-           (*b >= '#' && *b <= '~'))
+           (*b == '\r') ||           
+           (*b >= '#' && *b <= '~') ||            
+           ( *b == 0xc3 )) // multichar
     {
+        if( *b == 0xc3 )
+        {
+            id += *b; ++b;
+        }
         if( *b == '\\')
         {            
             id += *(char*)b; ++b;   
