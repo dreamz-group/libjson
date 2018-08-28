@@ -93,9 +93,9 @@ bool String::parse_string(std::string& id, uint8_t*& b, uint32_t& line)
            (*b == '\t') ||
            (*b == '\r') ||           
            (*b >= '#' && *b <= '~') ||            
-           ( *b == 0xc3 )) // multichar
+           ( (*b & 0xC0 ) == 0xC0 )) // multichar 2 - byte
     {
-        if( *b == 0xc3 )
+        if( (*b & 0xC0) == 0xC0 )
         {
             id += *b; ++b;
         }
