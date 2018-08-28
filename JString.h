@@ -37,6 +37,7 @@ public:
     String();
     String(const char* value);
     virtual ~String();
+    operator const std::string() { return _value; }
     virtual type_t getType() const;
     static Value* parse(uint8_t*& b, uint32_t& line);
     static bool parse_string(std::string& id, uint8_t*& b, uint32_t& line);

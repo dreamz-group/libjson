@@ -46,6 +46,16 @@ public:
     void parse_array(uint8_t*& b, uint32_t& line);
     void parse_object(uint8_t*& b, uint32_t& line);
     Value* read(uint8_t* b);
+    static inline json::Object* Object(uint8_t* b)
+    {
+        Parse p;
+        json::Value* v = p.read(b);
+        if( v == NULL )
+        {
+            return NULL;
+        }
+        return dynamic_cast<json::Object*>(v);
+    }
 };
 } //namespace json
 
