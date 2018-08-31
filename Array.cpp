@@ -25,6 +25,7 @@
 #include <sstream>
 
 #include "Array.h"
+#include "JString.h"
 
 namespace json
 {
@@ -48,58 +49,81 @@ type_t Array::getType() const
     return ARRAY;
 }
 
-Value* Array::parse(uint8_t*& b, uint32_t& line)
+Value* Array::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
-    skip(b, line);
-    if (*b != '[')
+    skip(b, max, line);
+    if (max == 0 || *b != '[')
     {
         std::cerr << "Parse error missing [ at line:" << line << std::endl;
         return NULL;
     }
-    ++b;
-    skip(b, line);
+    ++b; --max;
+    skip(b, max, line);
+    if( max == 0 )
+    {
+        std::cerr << "Out of buffer" << std::endl;
+        return NULL;
+    }
+
     Array* arr = new Array();
     if (*b == ']')
     {
-        ++b;
+        ++b; --max;
         return arr;
     }
 
     bool more = true;
     do
     {
-        Value* rtn = Value::parse(b, line);
+        Value* rtn = Value::parse(b, max, line);
         if (rtn == NULL)
         {
             delete arr;
             return NULL;
         }
         arr->_items.push_back(rtn);
-        skip(b, line);
+        skip(b, max, line);
+        if( max == 0 )
+        {
+            std::cerr << "Out of buffer" << std::endl;
+            return NULL;
+        }
+
         if (*b != ',')
         {
             more = false;
         }
         else
         {
-            ++b;
+            ++b; --max;
         }
     } while (more);
 
-    if (*b != ']')
+    if (max == 0 || *b != ']')
     {
         std::cerr << "Parse error missing ] at line:" << line << std::endl;
         delete arr;
         return NULL;
     }
-    ++b;
+    ++b; --max;
     return arr;
 }
 
 std::string Array::str() const
 {
     std::stringstream sstr;
-    sstr << this;
+    sstr << "[" ;
+    json::Array::VALUES::const_iterator itr = _items.begin();
+    while (itr != _items.end())
+    {
+        sstr << (*itr)->str();
+        ++itr;
+        if (itr != _items.end())
+        {
+            sstr << ",";
+        }
+    }
+    sstr << "]";
     return sstr.str();
 }
 
@@ -110,6 +134,21 @@ Value* Array::operator[](unsigned int index)
         return _items[index];
     }
     return NULL;
+}
+
+void Array::Add(const std::string& value)
+{
+    _items.push_back(new json::String(value.c_str()));
+}
+
+void Array::Add(const char* value)
+{
+    _items.push_back(new json::String(value));
+}
+
+void Array::Add(Value* value)
+{
+    _items.push_back(value);
 }
 
 size_t Array::length()

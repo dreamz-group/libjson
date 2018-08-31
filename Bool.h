@@ -37,7 +37,7 @@ public:
     Bool(bool v);
     virtual ~Bool();
     virtual type_t getType() const;
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     inline bool operator==(const bool b) { return _value == b; }
     inline bool operator==(const bool* b) { return _value == *b; }
     inline bool operator!=(const bool* b) { return _value != *b; }

@@ -45,11 +45,11 @@ public:
     void parse_number(uint8_t*& b, uint32_t& line);
     void parse_array(uint8_t*& b, uint32_t& line);
     void parse_object(uint8_t*& b, uint32_t& line);
-    Value* read(uint8_t* b);
-    static inline json::Object* Object(uint8_t* b)
+    Value* read(uint8_t* b, size_t max);
+    static inline json::Object* Object(uint8_t* b, size_t max)
     {
         Parse p;
-        json::Value* v = p.read(b);
+        json::Value* v = p.read(b, max);
         if( v == NULL )
         {
             return NULL;

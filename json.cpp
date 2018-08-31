@@ -34,10 +34,15 @@ Parse::Parse()
 {
 }
 
-Value* Parse::read(uint8_t* b)
+Value* Parse::read(uint8_t* b, size_t max)
 {
     uint32_t line = 1;
-    return Object::parse(b, line);
+    if( b == NULL || max == 0)
+    {
+        std::cerr << "Error can not convert NULL to json!" << std::endl;
+        return NULL;
+    }
+    return Object::parse(b, max, line);
 }
 
 std::ostream& operator<<(std::ostream& os, const json::Value* obj)

@@ -63,74 +63,80 @@ void Object::Add(const std::string& name, Value* value)
     _items.push_back(VALUE(name, value));
 }
 
-bool Object::value_pair(Object* obj, uint8_t*& b, uint32_t& line, bool& more)
+bool Object::value_pair(Object* obj, uint8_t*& b, size_t& max, uint32_t& line, bool& more)
 {
     // Parse id
-    skip(b, line);
+    skip(b, max, line);
     std::string id;
-    if (!String::parse_string(id, b, line))
+    if (!String::parse_string(id, b, max, line))
     {
         return false;
     }
-    skip(b, line);
-    if (*b != ':')
+    skip(b, max, line);
+    if (*b != ':' || max == 0)
     {
         std::cerr << "Parse error missing : at line:" << line << std::endl;
         return false;
     }
-    ++b;
+    ++b; --max;
 
-    Value* rtn = Value::parse(b, line);
+    Value* rtn = Value::parse(b, max, line);
     // TODO bool, null
     if (rtn == NULL)
     {
         return false;
     }
     obj->_items.push_back(VALUE(id, rtn));
-    skip(b, line);
-    if (*b != ',')
+    skip(b, max, line);
+    if (*b != ',' || max == 0)
     {
         more = false;
     }
     else
     {
-        ++b;
+        ++b; --max;
     }
     return true;
 }
 
-Value* Object::parse(uint8_t*& b, uint32_t& line)
+Value* Object::parse(uint8_t*& b, size_t& max,  uint32_t& line)
 {
-    skip(b, line);
-    if (*b != '{')
+    skip(b, max, line);
+    if (max == 0 || *b != '{')
     {
         std::cerr << "Parse error missing { at line:" << line << std::endl;
         return NULL;
     }
-    ++b;
-    skip(b, line);
+    ++b; --max;
+    skip(b, max, line);
+    if( max == 0 )
+    {
+        std::cerr << "No end of object found, before end of buffer" << std::endl;
+        return NULL;
+    }
+
     Object* obj = new Object();
     if (*b == '}')
     {
-        ++b;
+        ++b; --max;
         return obj;
     }
     bool more = true;
     while (more)
     {
-        if (!obj->value_pair(obj, b, line, more))
+        if (!obj->value_pair(obj, b, max, line, more))
         {
             delete obj;
             return NULL;
         }
     }
-    if (*b != '}')
+    if (*b != '}' || max==0 )
     {
         std::cerr << "Parse error missing } at line:" << line << std::endl;
         delete obj;
         return NULL;
     }
-    ++b;
+    ++b; --max;
     return obj;
 }
 
@@ -141,7 +147,7 @@ std::string Object::str() const
     json::Object::VALUES::const_iterator itr = this->_items.begin();
     while (itr != this->_items.end())
     {
-        os << "\"" << itr->first << "\" : " << itr->second;
+        os << "\"" << itr->first << "\" : " << itr->second->str();
         ++itr;
         if (itr != this->_items.end())
         {

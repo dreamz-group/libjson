@@ -37,9 +37,12 @@ public:
     Array();
     virtual ~Array();
     virtual type_t getType() const;
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     virtual std::string str() const;
     Value* operator[](unsigned int index);
+    void Add(Value* value);
+    void Add(const char* value);
+    void Add(const std::string& value);
     size_t length();
 protected:
     typedef std::vector<Value*> VALUES;

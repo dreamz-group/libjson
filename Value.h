@@ -48,16 +48,18 @@ public:
     virtual ~Value();
     virtual type_t getType() const = 0;
     friend std::ostream& operator<<(std::ostream& os, const Value* obj);
-    static inline void skip(uint8_t*& b, uint32_t& line)
+    static inline void skip(uint8_t*& b, size_t& max, uint32_t& line)
     {
-        while (*b == ' ' || *b == '\t' || *b == '\n' || *b == '\r')
+        while ((*b == ' ' || *b == '\t' || *b == '\n' || *b == '\r') && max != 0 )
         {
             if (*b == '\n')
+            {
                 ++line;
-            ++b;
+            }
+            ++b; --max;
         }
     }
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     virtual std::string str() const = 0;    
 };
 } // namespace json

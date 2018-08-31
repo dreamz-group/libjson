@@ -43,31 +43,36 @@ Value::~Value()
 {
 }
 
-Value* Value::parse(uint8_t*& b, uint32_t& line)
+Value* Value::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
     Value* rtn = NULL;
-    skip(b, line);
+    skip(b, max, line);
+    if( max == 0 )
+    {
+        std::cerr << "Out of buffer" << std::endl;
+        return NULL;
+    }
     if (*b == '"')
     {
-        rtn = String::parse(b, line);
+        rtn = String::parse(b, max, line);
     }
     else if ((*b >= '0' && *b <= '9') || *b == '-')
     {
-        rtn = Number::parse(b, line);
+        rtn = Number::parse(b, max, line);
     }
     else if (*b == '[')
     {
-        rtn = Array::parse(b, line);
+        rtn = Array::parse(b, max, line);
     }
     else if (*b == '{')
     {
-        rtn = Object::parse(b, line);
+        rtn = Object::parse(b, max, line);
     }
     else if( *b == 'n' || *b == 'N')
     {
-        rtn = Null::parse(b, line);
+        rtn = Null::parse(b, max, line);
     }
-    else if( (rtn = Bool::parse(b, line)) != NULL )
+    else if( (rtn = Bool::parse(b, max, line)) != NULL )
     {
 
     }

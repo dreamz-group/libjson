@@ -40,7 +40,7 @@ public:
     virtual type_t getType() const;
     virtual std::string str() const;
 
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     // Give a key as index for values.
     Value* operator[](const char* key);
     // Give integer as index to values.
@@ -58,7 +58,7 @@ protected:
     typedef std::vector<VALUE> VALUES;
 
     VALUES _items;
-    bool value_pair(Object* obj, uint8_t*& b, uint32_t& line, bool& more);
+    bool value_pair(Object* obj, uint8_t*& b, size_t& max, uint32_t& line, bool& more);
 
 private:
     friend std::ostream& operator<<(std::ostream& os, const Object* obj);

@@ -34,27 +34,17 @@ String::String()
 {
 }
 
+String::String(const std::string& value)
+{
+    _value = value;
+}
+
 String::String(const char* value)
 {
     _value = "";
     size_t len = strlen(value);
-    for (size_t i = 0; i < len; ++i)
-    {
-        switch (value[i])
-        {
-        case '\\':
-        case '"':
-        case '\t':
-        case '\n':
-        case '\f':
-        case '\r':
-            _value += '\\';
-            break;
-        default:
-            break;
-        }
-        _value += value[i];
-    }
+    uint8_t* t = (uint8_t*) value;
+    Format(t, len, _value);
 }
 
 String::~String()
@@ -66,10 +56,10 @@ type_t String::getType() const
     return STRING;
 }
 
-Value* String::parse(uint8_t*& b, uint32_t& line)
+Value* String::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
     String* rtn = new String();
-    if (parse_string(rtn->_value, b, line))
+    if (parse_string(rtn->_value, b, max, line))
     {
         return rtn;
     }
@@ -77,41 +67,48 @@ Value* String::parse(uint8_t*& b, uint32_t& line)
     return NULL;
 }
 
-bool String::parse_string(std::string& id, uint8_t*& b, uint32_t& line)
+void String::Format(uint8_t*& b, size_t& max, std::string& id)
 {
-    if (*b != '\"')
+    while ( max &&
+            ( (*b == ' ')  ||
+              (*b == '!')  ||
+              (*b == '\n') ||
+              (*b == '\t') ||
+              (*b == '\r') ||           
+              (*b >= '#' && *b <= '~') ||            
+              ( (*b & 0xC0 ) == 0xC0 ) // multichar 2 - byte
+            )
+           ) 
+    {
+        if( (*b & 0xC0) == 0xC0 )
+        {
+            id += *b; ++b; --max;
+        }
+        if( *b == '\\')
+        {            
+            id += *(char*)b; ++b; --max;
+        }
+        id += *(char*)b;
+        ++b; --max;
+    }
+}
+
+bool String::parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& line)
+{
+    if (*b != '\"' || max == 0)
     {
         std::cerr << "Parse error missing start \" of id at line:" << line << std::endl;
         return false;
     }
-    ++b;
+    ++b; --max;
     id = "";
-
-    while ((*b == ' ')  ||
-           (*b == '!')  ||
-           (*b == '\n') ||
-           (*b == '\t') ||
-           (*b == '\r') ||           
-           (*b >= '#' && *b <= '~') ||            
-           ( (*b & 0xC0 ) == 0xC0 )) // multichar 2 - byte
-    {
-        if( (*b & 0xC0) == 0xC0 )
-        {
-            id += *b; ++b;
-        }
-        if( *b == '\\')
-        {            
-            id += *(char*)b; ++b;   
-        }
-        id += *(char*)b;
-        ++b;
-    }
-    if (*b != '\"')
+    Format(b, max, id);
+    if (*b != '\"' || max == 0)
     {
         std::cerr << "Parse error missing end \" of id at line:" << line << " on char '" << *(char*)b << "'" << std::endl;
         return false;
     }
-    ++b;
+    ++b; --max;
     return true;
 }
 

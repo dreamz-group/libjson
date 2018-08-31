@@ -80,21 +80,32 @@ Number::operator int() const
     return INT_MAX;    
 }
 
-Value* Number::parse(uint8_t*& b, uint32_t& line)
+Value* Number::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
     uint64_t value = 0;
     bool     dec = false;
     bool     neg = false;
     double   dbl = 0;
+    if( max == 0 )
+    {
+        std::cerr << "Out of buffer" << std::endl;
+        return NULL;
+    }
     if (*b == '-')
     {
         neg = true;
-        ++b;
+        ++b; --max;
     }
 
-    if (!digit(b, value))
+    if (!digit(b, max, value))
     {
         std::cerr << "Not a number at line:" << line << std::endl;
+        return NULL;
+    }
+
+    if( max == 0 )
+    {
+        std::cerr << "Out of buffer" << std::endl;
         return NULL;
     }
 
@@ -103,10 +114,15 @@ Value* Number::parse(uint8_t*& b, uint32_t& line)
         dbl = (double)value;
         uint8_t* t = b;
         dec = true;
-        ++b;
-        if (!digit(b, value))
+        ++b; --max;
+        if (!digit(b, max, value))
         {
             std::cerr << "Must be atleast one digit after '.' at line:" << line << std::endl;
+            return NULL;
+        }
+        if( max == 0 )
+        {
+            std::cerr << "Out of buffer" << std::endl;
             return NULL;
         }
         dbl += (double)value / pow(10, b - t);

@@ -36,17 +36,19 @@ class String : public virtual Value
 public:
     String();
     String(const char* value);
+    String(const std::string& value);
     virtual ~String();
     operator const std::string() { return _value; }
     virtual type_t getType() const;
-    static Value* parse(uint8_t*& b, uint32_t& line);
-    static bool parse_string(std::string& id, uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
+    static bool parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& line);
     inline bool operator==(const char* str) { return _value == str; }
     inline bool operator!=(const char* str) { return _value != str; }
     inline const char*        c_str() { return _value.c_str(); }
     virtual std::string str() const { return _value; }
 
 private:
+    static void Format(uint8_t*& b, size_t& max, std::string& id);
     friend std::ostream& operator<<(std::ostream& os, const String* obj);
 };
 } // namespace json

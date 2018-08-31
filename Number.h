@@ -53,21 +53,25 @@ public:
     virtual ~Number();
     virtual type_t getType() const;
     virtual std::string str() const;
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     uint64_t value();
     operator int() const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Number* obj);
-    static inline bool digit(uint8_t*& b, uint64_t& value)
+    static inline bool digit(uint8_t*& b, size_t& max, uint64_t& value)
     {
+        if( max == 0 )
+        {
+            return false;
+        }
         if (*b < '0' || *b > '9')
         {
             return false;
         }
-        while (*b >= '0' && *b <= '9')
+        while (*b >= '0' && *b <= '9' && max != 0 )
         {
             value = (value * 10) + (*b - '0');
-            ++b;
+            ++b; --max;
         }
         return true;
     }

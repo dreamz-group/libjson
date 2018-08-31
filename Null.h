@@ -12,7 +12,7 @@ public:
     virtual ~Null();
     virtual type_t getType() const;
     virtual std::string str() const;
-    static Value* parse(uint8_t*& b, uint32_t& line);
+    static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     friend std::ostream& operator<<(std::ostream& os, const Null* obj);
 };
 

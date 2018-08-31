@@ -45,10 +45,16 @@ type_t Bool::getType() const
     return BOOL;
 }
 
-Value* Bool::parse(uint8_t*& b, uint32_t& line)
+Value* Bool::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
-    skip(b,line);
-    if ((*b     == 'T' || *b     == 't') &&
+    skip(b, max, line);
+    if( max == 0 )
+    {
+        std::cerr << "Out of buffer" << std::endl;
+        return NULL;
+    }
+    if ( max >= 4 &&
+        (*b     == 'T' || *b     == 't') &&
         (*(b+1) == 'R' || *(b+1) == 'r') &&
         (*(b+2) == 'U' || *(b+2) == 'u') &&
         (*(b+3) == 'E' || *(b+3) == 'e'))
@@ -56,7 +62,8 @@ Value* Bool::parse(uint8_t*& b, uint32_t& line)
         b+=4;
         return new Bool(true);
     }
-    else if ((*b     == 'F' || *b     == 'f') &&
+    else if ( max >= 5 &&
+             (*b     == 'F' || *b     == 'f') &&
              (*(b+1) == 'A' || *(b+1) == 'a') &&
              (*(b+2) == 'L' || *(b+2) == 'l') &&
              (*(b+3) == 'S' || *(b+3) == 's') &&
