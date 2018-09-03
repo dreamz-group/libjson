@@ -158,7 +158,7 @@ size_t Array::length()
 
 std::ostream& operator<<(std::ostream& os, const Array* arr)
 {
-    os << "[" << std::endl;
+    os << "[ ";
     json::Array::VALUES::const_iterator itr = arr->_items.begin();
     while (itr != arr->_items.end())
     {
@@ -166,15 +166,11 @@ std::ostream& operator<<(std::ostream& os, const Array* arr)
         ++itr;
         if (itr != arr->_items.end())
         {
-            os << "," << std::endl;
-        }
-        else
-        {
-            os << std::endl;
+            os << ", ";
         }
     }
 
-    os << "]";
+    os << " ]";
     return os;
 }
 }// namespace json

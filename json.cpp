@@ -42,6 +42,16 @@ Value* Parse::read(uint8_t* b, size_t max)
         std::cerr << "Error can not convert NULL to json!" << std::endl;
         return NULL;
     }
+    Value::skip(b, max, line);
+    if( *b == '\0' || max == 0 )
+    {
+        std::cerr << "No data in file to read!" << std::endl;
+        return NULL;
+    }
+    if( *b == '[' )
+    {
+        return Array::parse(b, max, line);
+    }
     return Object::parse(b, max, line);
 }
 

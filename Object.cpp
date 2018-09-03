@@ -160,7 +160,7 @@ std::string Object::str() const
 
 std::ostream& operator<<(std::ostream& os, const Object* obj)
 {
-    os << "{" << std::endl;
+    os << "{ ";
     json::Object::VALUES::const_iterator itr = obj->_items.begin();
     while (itr != obj->_items.end())
     {
@@ -168,15 +168,11 @@ std::ostream& operator<<(std::ostream& os, const Object* obj)
         ++itr;
         if (itr != obj->_items.end())
         {
-            os << ","  << std::endl;
-        }
-        else
-        {
-            os << std::endl;
+            os << ", ";
         }
     }
 
-    os << "}";
+    os << " }";
     return os;
 }
 
