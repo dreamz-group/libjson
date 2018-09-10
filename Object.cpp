@@ -147,7 +147,15 @@ std::string Object::str() const
     json::Object::VALUES::const_iterator itr = this->_items.begin();
     while (itr != this->_items.end())
     {
-        os << "\"" << itr->first << "\" : " << itr->second->str();
+        os << "\"" << itr->first << "\" : ";
+        if( itr->second->getType() == json::STRING)
+        {
+            os << "\"" << itr->second->str() << "\"";
+        }
+        else
+        {
+            os << itr->second->str();
+        }
         ++itr;
         if (itr != this->_items.end())
         {

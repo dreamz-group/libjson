@@ -112,6 +112,23 @@ bool String::parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& l
     return true;
 }
 
+String& String::operator=(char* str)
+{
+    _value = "";
+    size_t len = strlen(str);
+    uint8_t* t = (uint8_t*)str;
+    Format(t, len, _value);    
+    return *this;
+}
+String& String::operator=(std::string& str)
+{
+    _value = "";
+    size_t len = str.length();
+    uint8_t* t = (uint8_t*)str.c_str();
+    Format(t, len, _value);    
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const String* obj)
 {
     os << "\"" << obj->_value << "\"";
