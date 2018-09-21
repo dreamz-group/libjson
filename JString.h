@@ -44,6 +44,8 @@ public:
     static bool parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& line);
     inline bool operator==(const char* str) { return _value == str; }
     inline bool operator!=(const char* str) { return _value != str; }
+    inline bool operator==(const std::string& str) { return _value == str; }
+    inline bool operator!=(const std::string& str) { return _value != str; }
     String& operator=(char* str);
     String& operator=(std::string& str);
 
