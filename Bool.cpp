@@ -85,5 +85,8 @@ std::ostream& operator<<(std::ostream& os, const Bool* obj)
     os << (obj->_value ? "true" : "false");
     return os;
 }
-
+Bool::operator bool() const
+{
+    return _value;
+}
 }// namespace json

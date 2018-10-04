@@ -43,6 +43,7 @@ public:
     inline bool operator!=(const bool* b) { return _value != *b; }
     inline const char*        c_str() { return _value ? "true" : "false"; }    
     virtual std::string str() const;
+    operator bool() const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Bool* obj);
 };

@@ -77,7 +77,22 @@ Number::operator int() const
         return (int)_value.ui;
     }
     std::cerr << "Can not be casted to int!" << std::endl;
-    return INT_MAX;    
+    return INT_MAX;
+}
+
+
+Number::operator double() const
+{
+    if( _type == Number::DOUBLE )
+    {
+        return _value.d;
+    }
+    int t = *this;
+    if( t != INT_MAX)
+    {
+        return (double)t;
+    }
+    return NAN;
 }
 
 Value* Number::parse(uint8_t*& b, size_t& max, uint32_t& line)
