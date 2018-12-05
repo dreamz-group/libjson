@@ -23,6 +23,7 @@
     SOFTWARE.
 */
 #include <sstream>
+#include <stdio.h>
 
 #include "Array.h"
 #include "JString.h"
@@ -154,6 +155,46 @@ void Array::Add(Value* value)
 size_t Array::length()
 {
     return _items.size();
+}
+
+Value* Array::_find( SPATH& spath) const 
+{
+    // Support [index] and [*] to match first found.
+    std::string t = spath[0];
+    if( t[0] != '[' || t[ t.length() - 1 ] != ']' )
+    {
+        return NULL;
+    }
+    spath.erase( spath.begin() );
+    if( t.length() == 3 && t[1] == '*')
+    {
+        json::Array::VALUES::const_iterator itr = _items.begin();
+        for(; itr != _items.end(); ++itr )
+        {
+            Value* v = (*itr)->_find(spath);
+            if( v != NULL )
+            {
+                return v;
+            }
+        }
+        return NULL;
+    }
+    t = t.substr(1, t.length() - 1 ); // remove [ and ]
+    int i = -1;
+    if( sscanf(t.c_str(), "%d", &i) != 1 || i <= -1)
+    {
+        return NULL;
+    }
+
+    if( (unsigned int)i >= _items.size( ))
+    {
+        return NULL;
+    }
+    if( spath.size() == 0 )
+    {
+        return _items[i];
+    }
+    return _items[i]->_find(spath);
 }
 
 std::ostream& operator<<(std::ostream& os, const Array* arr)

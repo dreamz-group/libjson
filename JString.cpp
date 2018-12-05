@@ -135,5 +135,9 @@ std::ostream& operator<<(std::ostream& os, const String* obj)
     return os;
 }
 
+Value* String::_find( SPATH& spath) const
+{
+    return NULL;
+}
 
 }// namespace json

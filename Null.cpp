@@ -38,4 +38,9 @@ std::ostream& operator<<(std::ostream& os, const Null* obj)
     return os;
 }
 
+Value* Null::_find( SPATH& spath) const
+{
+    return NULL;
+}
+
 } // namespace json

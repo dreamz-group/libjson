@@ -60,6 +60,7 @@ protected:
     VALUES _items;
     bool value_pair(Object* obj, uint8_t*& b, size_t& max, uint32_t& line, bool& more);
 
+    virtual Value* _find( SPATH& spath) const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Object* obj);
 };

@@ -181,5 +181,9 @@ std::ostream& operator<<(std::ostream& os, const Number* obj)
     return os;
 }
 
+Value* Number::_find( SPATH& spath) const
+{
+    return NULL;
+}
 
 }// namespace json

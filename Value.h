@@ -27,6 +27,8 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <vector>
+
 namespace json
 {
 
@@ -60,7 +62,11 @@ public:
         }
     }
     static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
-    virtual std::string str() const = 0;    
+    virtual std::string str() const = 0;
+    Value* find(const char* path) const;
+
+    typedef std::vector<std::string> SPATH;
+    virtual Value* _find( SPATH& spath) const = 0;
 };
 } // namespace json
 #endif // __NUMBER_H__

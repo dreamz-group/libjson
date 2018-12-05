@@ -44,6 +44,7 @@ public:
     inline const char*        c_str() { return _value ? "true" : "false"; }    
     virtual std::string str() const;
     operator bool() const;
+    virtual Value* _find( SPATH& spath) const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Bool* obj);
 };

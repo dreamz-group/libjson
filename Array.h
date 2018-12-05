@@ -48,6 +48,7 @@ protected:
     typedef std::vector<Value*> VALUES;
     VALUES _items;
 
+    virtual Value* _find( SPATH& spath) const;
 private:
     friend std::ostream& operator<<(std::ostream& os, const Array* obj);
 };

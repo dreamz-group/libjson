@@ -89,4 +89,9 @@ Bool::operator bool() const
 {
     return _value;
 }
+
+Value* Bool::_find( SPATH& spath) const
+{
+    return NULL;
+}
 }// namespace json

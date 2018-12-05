@@ -23,6 +23,8 @@
     SOFTWARE.
 */
 #include <iostream>
+#include <string.h>
+#include <stdlib.h>
 
 #include "Value.h"
 #include "JString.h"
@@ -81,6 +83,32 @@ Value* Value::parse(uint8_t*& b, size_t& max, uint32_t& line)
         std::cerr << "Type mismatch on line: " << line << std::endl;
     }
     return rtn;
+}
+
+Value* Value::find(const char* path) const
+{
+    if( path == NULL )
+    {
+        return NULL;
+    }
+
+    size_t size = strlen(path);
+    if( size > 2048 )
+    {
+        std::cerr << "ERROR Value::find - You are not for real! strlen is too long !" << std::endl;
+        return NULL;
+    }
+    char* tmp = strdup(path);
+    char* save = NULL;
+    char* part = strtok_r(tmp, "/\0", &save);
+    SPATH spath;
+    while( part != NULL )
+    {
+        spath.push_back(part);
+        part = strtok_r(NULL, "/\0", &save);
+    }
+    free( tmp );
+    return _find( spath );
 }
 
 }// namespace json

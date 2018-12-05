@@ -51,6 +51,7 @@ public:
 
     inline const char*        c_str() { return _value.c_str(); }
     virtual std::string str() const { return _value; }
+    virtual Value* _find( SPATH& spath) const;
 
 private:
     static void Format(uint8_t*& b, size_t& max, std::string& id);

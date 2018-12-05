@@ -57,6 +57,7 @@ public:
     uint64_t value();
     operator int() const;
     operator double() const;
+    virtual Value* _find( SPATH& spath) const;
     
 private:
     friend std::ostream& operator<<(std::ostream& os, const Number* obj);

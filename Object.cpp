@@ -163,7 +163,31 @@ std::string Object::str() const
         }
     }
     os << "}";
-    return os.str();    
+    return os.str();
+}
+
+Value* Object::_find( SPATH& spath) const
+{
+    if( spath.size() == 0 )
+    {
+        return NULL;
+    }
+
+    json::Object::VALUES::const_iterator itr = _items.begin();
+    for(; itr != _items.end(); ++itr )
+    {
+        if( itr->first != spath[0] )
+        {
+            continue;
+        }
+        if( spath.size() == 1 )
+        {
+            return itr->second;
+        }
+        spath.erase( spath.begin() );
+        return itr->second->_find(spath);
+    }
+    return NULL;
 }
 
 std::ostream& operator<<(std::ostream& os, const Object* obj)
