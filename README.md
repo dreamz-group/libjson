@@ -18,4 +18,5 @@ Usage:
 		fprintf(stderr,"Invalid object.\n");
 		return;
 	}
+	delete v;
 ```
