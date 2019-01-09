@@ -36,6 +36,22 @@ Array::Array()
 {
 }
 
+Array::Array(const Array* a)
+{
+    *this = a;
+}
+
+Array* Array::operator=(const Array* a)
+{
+    _items.clear();
+    json::Array::VALUES::const_iterator itr = a->_items.begin();
+    for (; itr != a->_items.end(); ++itr)
+    {
+        _items.push_back( Value::Clone(*itr) );
+    }
+    return this;
+}
+
 Array::~Array()
 {
     json::Array::VALUES::iterator itr = _items.begin();
@@ -150,6 +166,15 @@ void Array::Add(const char* value)
 void Array::Add(Value* value)
 {
     _items.push_back(value);
+}
+
+void Array::Remove(unsigned int index)
+{
+    if( index >= _items.size())
+    {
+        return;
+    }
+     _items.erase( _items.begin() + index );
 }
 
 size_t Array::length()

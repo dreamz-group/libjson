@@ -35,14 +35,18 @@ class Array : public virtual Value
 {
 public:
     Array();
+    Array(const Array* a);
     virtual ~Array();
     virtual type_t getType() const;
     static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     virtual std::string str() const;
     Value* operator[](unsigned int index);
+    Array* operator=(const Array* a);
     void Add(Value* value);
     void Add(const char* value);
     void Add(const std::string& value);
+    void Remove(unsigned int index);
+
     size_t length();
 protected:
     typedef std::vector<Value*> VALUES;

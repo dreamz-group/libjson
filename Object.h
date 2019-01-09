@@ -35,6 +35,8 @@ class Object : public virtual Value
 {
 public:
     Object();
+    Object(const Object* o);
+
     virtual ~Object();
 
     virtual type_t getType() const;
@@ -45,6 +47,7 @@ public:
     Value* operator[](const char* key);
     // Give integer as index to values.
     Value* operator[](unsigned int index);
+    Object* operator=(const Object* o);
 
     // Give integer as index to get a key;
     bool key(unsigned int index, std::string& out);
@@ -52,6 +55,7 @@ public:
     void Add(const std::string& name, Value* value);
     void Add(const std::string& name, const char* value);
     void Add(const std::string& name, const std::string& value);
+    void Remove(const std::string& name);
 
 protected:
     typedef std::pair<std::string, Value*> VALUE;

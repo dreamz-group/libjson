@@ -37,6 +37,7 @@ public:
     String();
     String(const char* value);
     String(const std::string& value);
+    String(const String* v);
     virtual ~String();
     operator const std::string() { return _value; }
     virtual type_t getType() const;
@@ -46,6 +47,7 @@ public:
     inline bool operator!=(const char* str) { return _value != str; }
     inline bool operator==(const std::string& str) { return _value == str; }
     inline bool operator!=(const std::string& str) { return _value != str; }
+    String* operator=(const String* v);
     String& operator=(char* str);
     String& operator=(std::string& str);
 

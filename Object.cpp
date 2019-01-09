@@ -34,6 +34,22 @@ Object::Object()
 {
 }
 
+Object::Object(const Object* o)
+{
+    *this = o;
+}
+
+Object* Object::operator=(const Object* o)
+{
+    _items.clear();
+    json::Object::VALUES::const_iterator itr = o->_items.begin();
+    for (; itr != o->_items.end(); ++itr)
+    {
+        _items.push_back(VALUE(itr->first, Value::Clone(itr->second)));
+    }
+    return this;
+}
+
 Object::~Object()
 {
     json::Object::VALUES::iterator itr = _items.begin();
@@ -61,6 +77,21 @@ void Object::Add(const std::string& name, const char* value)
 void Object::Add(const std::string& name, Value* value)
 {
     _items.push_back(VALUE(name, value));
+}
+
+void Object::Remove(const std::string& name)
+{
+    json::Object::VALUES::iterator itr = _items.begin();
+    for(; itr != _items.end(); ++itr )
+    {
+        if( itr->first != name )
+        {
+            continue;
+        }
+        delete itr->second;
+        _items.erase(itr);
+        return;
+    }
 }
 
 bool Object::value_pair(Object* obj, uint8_t*& b, size_t& max, uint32_t& line, bool& more)

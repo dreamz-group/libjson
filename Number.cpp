@@ -26,6 +26,7 @@
 #include <math.h>
 #include <sstream>
 #include <limits.h>
+#include <string.h>
 
 #include "Number.h"
 
@@ -49,6 +50,18 @@ Number::Number(double v)
 {
     _type = DOUBLE;
     _value.d = v;
+}
+
+Number::Number(const Number* v)
+{
+    *this = v;
+}
+
+Number* Number::operator=(const Number* v)
+{
+    _type = v->_type;
+    memcpy(&_value, &v->_value, sizeof(_Number_Value));
+    return this;
 }
 
 Number::~Number()

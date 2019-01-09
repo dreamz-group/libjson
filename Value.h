@@ -67,6 +67,8 @@ public:
 
     typedef std::vector<std::string> SPATH;
     virtual Value* _find( SPATH& spath) const = 0;
+protected:
+    static Value* Clone(const Value* v);
 };
 } // namespace json
 #endif // __NUMBER_H__

@@ -45,6 +45,29 @@ Value::~Value()
 {
 }
 
+Value* Value::Clone(const Value* v)
+{
+    switch( v->getType() )
+    {
+        case ARRAY:
+            return new Array( dynamic_cast<const Array*>(v) );
+        case BOOL:
+            return new Bool( dynamic_cast<const Bool*>(v) );
+        case STRING:
+            return new String( dynamic_cast<const String*>(v) );
+        case NULL_TYPE:
+            return new Null();
+        case OBJECT:
+            return new Object( dynamic_cast<const Object*>(v) );
+        case NUMBER:
+            return new Number( dynamic_cast<const Number*>(v) );
+        default:
+            break;
+    }
+    std::cerr << "Error" << std::endl;
+    return NULL;
+}
+
 Value* Value::parse(uint8_t*& b, size_t& max, uint32_t& line)
 {
     Value* rtn = NULL;

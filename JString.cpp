@@ -39,6 +39,17 @@ String::String(const std::string& value)
     _value = value;
 }
 
+String::String(const String* v)
+{
+    _value = v->_value;
+}
+
+String* String::operator=(const String* v)
+{
+    _value = v->_value;
+    return this;
+}
+
 String::String(const char* value)
 {
     _value = "";
