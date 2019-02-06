@@ -56,7 +56,7 @@ public:
     void Add(const std::string& name, const char* value);
     void Add(const std::string& name, const std::string& value);
     void Remove(const std::string& name);
-
+    size_t length() const;
 protected:
     typedef std::pair<std::string, Value*> VALUE;
     typedef std::vector<VALUE> VALUES;

@@ -79,6 +79,10 @@ void Object::Add(const std::string& name, Value* value)
     _items.push_back(VALUE(name, value));
 }
 
+size_t Object::length() const
+{
+    return _items.size();
+}
 void Object::Remove(const std::string& name)
 {
     json::Object::VALUES::iterator itr = _items.begin();

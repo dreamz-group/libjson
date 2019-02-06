@@ -76,6 +76,12 @@ std::ostream& operator<<(std::ostream& os, const json::Value* obj)
     case json::STRING:
         os << dynamic_cast<const json::String*>(obj);
         break;
+    case json::BOOL:
+        os << dynamic_cast<const json::Bool*>(obj);
+        break;
+    case json::NULL_TYPE:
+        os << dynamic_cast<const json::Null*>(obj);
+        break;
     default:
         os << "Invalid object " << obj->getType() << std::endl;
         break;

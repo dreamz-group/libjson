@@ -46,6 +46,18 @@ Number::Number(int64_t v)
     _value.i = v;
 }
 
+Number::Number(uint32_t v)
+{
+    _type = UINT64;
+    _value.ui = v;
+}
+
+Number::Number(int32_t v)
+{
+    _type = INT64;
+    _value.i = v;
+}
+
 Number::Number(double v)
 {
     _type = DOUBLE;

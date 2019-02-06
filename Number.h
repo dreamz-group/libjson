@@ -49,6 +49,8 @@ class Number : public virtual Value
 public:
     Number(uint64_t v);
     Number(int64_t v);
+    Number(int32_t v);
+    Number(uint32_t v);
     Number(double v);
     Number(const Number* v);
     virtual ~Number();
