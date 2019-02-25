@@ -52,6 +52,23 @@ Array* Array::operator=(const Array* a)
     return this;
 }
 
+bool Array::operator==(const Array* a)
+{
+    if( _items.size() != a->_items.size())
+    {
+        return false;
+    }
+    for( size_t i=0; i < _items.size(); ++i )
+    {
+        if( *_items[i] == a->_items[i] )
+        {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
 Array::~Array()
 {
     json::Array::VALUES::iterator itr = _items.begin();

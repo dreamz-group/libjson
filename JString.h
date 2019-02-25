@@ -47,6 +47,8 @@ public:
     inline bool operator!=(const char* str) { return _value != str; }
     inline bool operator==(const std::string& str) { return _value == str; }
     inline bool operator!=(const std::string& str) { return _value != str; }
+    inline bool operator==(const String& str) { return _value == str._value; }
+    inline bool operator!=(const String& str) { return _value != str._value; }
     String* operator=(const String* v);
     String& operator=(char* str);
     String& operator=(std::string& str);

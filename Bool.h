@@ -35,13 +35,15 @@ class Bool : public virtual Value
 public:
     Bool();
     Bool(bool v);
+    Bool(const Bool* v);
     virtual ~Bool();
     virtual type_t getType() const;
     static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     inline bool operator==(const bool b) { return _value == b; }
-    inline bool operator==(const bool* b) { return _value == *b; }
+    inline bool operator==(const Bool* b) { return _value == b->_value; }
     inline bool operator!=(const bool* b) { return _value != *b; }
-    inline const char*        c_str() { return _value ? "true" : "false"; }    
+    inline bool operator!=(const Bool* b) { return _value != b->_value; }
+    inline const char*        c_str() { return _value ? "true" : "false"; }
     virtual std::string str() const;
     operator bool() const;
     virtual Value* _find( SPATH& spath) const;

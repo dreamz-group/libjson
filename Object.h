@@ -47,7 +47,9 @@ public:
     Value* operator[](const char* key);
     // Give integer as index to values.
     Value* operator[](unsigned int index);
+    
     Object* operator=(const Object* o);
+    bool operator==(const Object* o);
 
     // Give integer as index to get a key;
     bool key(unsigned int index, std::string& out);

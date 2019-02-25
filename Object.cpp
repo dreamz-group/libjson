@@ -50,6 +50,24 @@ Object* Object::operator=(const Object* o)
     return this;
 }
 
+bool Object::operator==(const Object* a)
+{
+    if( _items.size() != a->_items.size())
+    {
+        return false;
+    }
+    for( size_t i=0; i < _items.size(); ++i )
+    {
+        if( _items[i].first == a->_items[i].first &&  
+            *(_items[i].second) == a->_items[i].second )
+        {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
 Object::~Object()
 {
     json::Object::VALUES::iterator itr = _items.begin();

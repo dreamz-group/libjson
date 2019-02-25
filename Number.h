@@ -62,6 +62,7 @@ public:
     operator double() const;
     virtual Value* _find( SPATH& spath) const;
     Number* operator=(const Number* v);
+    bool operator==(const Number* v);
     
 private:
     friend std::ostream& operator<<(std::ostream& os, const Number* obj);

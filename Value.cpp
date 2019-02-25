@@ -45,6 +45,11 @@ Value::~Value()
 {
 }
 
+Value* Value::Clone()
+{
+    return Clone(this);
+}
+
 Value* Value::Clone(const Value* v)
 {
     switch( v->getType() )
@@ -66,6 +71,61 @@ Value* Value::Clone(const Value* v)
     }
     std::cerr << "Error" << std::endl;
     return NULL;
+}
+
+bool Value::operator==(const Value* obj)
+{
+    if( obj == NULL )
+    {
+        return false;
+    }
+    if( getType() != obj->getType() )
+    {
+        return false;
+    }
+    switch( getType() )
+    {
+        case ARRAY:
+        {
+            Array* a1 = dynamic_cast<Array*>(this);
+            const Array* a2 = dynamic_cast<const Array*>(obj);
+            return *a1 == a2;
+        }
+        case BOOL:
+        {
+            Bool* b1 = dynamic_cast<Bool*>(this);
+            const Bool* b2 = dynamic_cast<const Bool*>(obj);
+            return *b1 == b2;
+        }
+        case STRING:
+        {
+            String* a1 = dynamic_cast<String*>(this);
+            const String* a2 = dynamic_cast<const String*>(obj);
+            return *a1 == a2;
+        }
+        case NULL_TYPE:
+            return true;
+        case OBJECT:
+        {
+            Object* a1 = dynamic_cast<Object*>(this);
+            const Object* a2 = dynamic_cast<const Object*>(obj);
+            return *a1 == a2;
+        }
+        case NUMBER:
+        {
+            Number* a1 = dynamic_cast<Number*>(this);
+            const Number* a2 = dynamic_cast<const Number*>(obj);
+            return *a1 == a2;
+        }
+        default:
+            break;
+    }
+    return false;
+}
+
+bool Value::operator!=(const Value* obj)
+{
+    return !(*this == obj);
 }
 
 Value* Value::parse(uint8_t*& b, size_t& max, uint32_t& line)

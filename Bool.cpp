@@ -35,7 +35,10 @@ Bool::Bool(bool b)
 {
     _value = b;
 }
-
+Bool::Bool(const Bool* v)
+{
+    _value = v->_value;
+}
 Bool::~Bool()
 {
 }
