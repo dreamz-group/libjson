@@ -54,6 +54,7 @@ public:
     String& operator=(std::string& str);
 
     inline const char*        c_str() { return _value.c_str(); }
+    inline size_t            length() { return _value.length(); }
     virtual std::string str() const { return _value; }
     virtual Value* _find( SPATH& spath) const;
 
