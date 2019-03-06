@@ -50,7 +50,7 @@ public:
     inline bool operator==(const String& str) { return _value == str._value; }
     inline bool operator!=(const String& str) { return _value != str._value; }
     String* operator=(const String* v);
-    String& operator=(char* str);
+    String& operator=(const char* str);
     String& operator=(std::string& str);
 
     inline const char*        c_str() { return _value.c_str(); }

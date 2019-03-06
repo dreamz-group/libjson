@@ -123,7 +123,7 @@ bool String::parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& l
     return true;
 }
 
-String& String::operator=(char* str)
+String& String::operator=(const char* str)
 {
     _value = "";
     size_t len = strlen(str);
