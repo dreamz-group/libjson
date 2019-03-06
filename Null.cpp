@@ -29,12 +29,12 @@ Value* Null::parse(uint8_t*& b, size_t& max, uint32_t& line)
 
 std::string Null::str() const
 {
-    return std::string("NULL");
+    return std::string("null");
 }
 
 std::ostream& operator<<(std::ostream& os, const Null* obj)
 {
-    os << "NULL";
+    os << "null";
     return os;
 }
 
