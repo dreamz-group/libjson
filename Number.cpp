@@ -156,11 +156,12 @@ Value* Number::parse(uint8_t*& b, size_t& max, uint32_t& line)
 
     if (*b == '.')
     {
+        ++b; --max;
         dbl = (double)value;
         uint8_t* t = b;
         dec = true;
-        ++b; --max;
-        if (!digit(b, max, value))
+        value = 0;
+        if ( max == 0 || !digit(b, max, value))
         {
             std::cerr << "Must be atleast one digit after '.' at line:" << line << std::endl;
             return NULL;

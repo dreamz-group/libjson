@@ -11,6 +11,10 @@ endif()
 
 target_include_directories(json PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+option(make_tests "Make test programs" OFF)
 
+if(${make_tests})
+    add_subdirectory (Tests)
+endif()
   
    
