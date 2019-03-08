@@ -8,4 +8,4 @@ add_executable(libjson_test ${SOURCE} )
 
 target_link_libraries(libjson_test  json ${GTEST_LIBRARIES} pthread)
 
-add_test (NAME SunLight COMMAND libjson_test)
+add_test (NAME libjson COMMAND libjson_test)
