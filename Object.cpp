@@ -274,6 +274,19 @@ Value* Object::operator[](const char* key)
     return NULL;
 }
 
+const Value* Object::operator[](const char* key) const
+{
+    json::Object::VALUES::const_iterator itr = _items.begin();
+    for (; itr != _items.end(); ++itr)
+    {
+        if (itr->first == key)
+        {
+            return itr->second;
+        }
+    }
+    return NULL;
+}
+
 bool Object::key(unsigned int index, std::string& out)
 {
     if( _items.size() > index )
@@ -290,6 +303,16 @@ Value* Object::operator[](unsigned int index)
     if( _items.size() > index )
     {
         VALUE v = _items[index];
+        return v.second;
+    }
+    return NULL;
+}
+
+const Value* Object::operator[](unsigned int index) const
+{
+    if( _items.size() > index )
+    {
+        const VALUE v = _items[index];
         return v.second;
     }
     return NULL;

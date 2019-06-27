@@ -45,9 +45,11 @@ public:
     static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     // Give a key as index for values.
     Value* operator[](const char* key);
+    const Value* operator[](const char* key) const;
     // Give integer as index to values.
     Value* operator[](unsigned int index);
-    
+    const Value* operator[](unsigned int index) const;
+
     Object* operator=(const Object* o);
     bool operator==(const Object* o);
 
