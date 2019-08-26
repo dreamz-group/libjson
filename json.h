@@ -56,6 +56,16 @@ public:
         }
         return dynamic_cast<json::Object*>(v);
     }
+    static inline json::Array* Array(uint8_t* b, size_t max)
+    {
+        Parse p;
+        json::Value* v = p.read(b, max);
+        if( v == NULL )
+        {
+	    return NULL;
+        }
+        return dynamic_cast<json::Array*>(v);
+    }                              
 };
 } //namespace json
 
