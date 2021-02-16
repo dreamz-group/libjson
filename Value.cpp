@@ -73,7 +73,7 @@ Value* Value::Clone(const Value* v)
     return NULL;
 }
 
-bool Value::operator==(const Value* obj)
+bool Value::operator==(const Value* obj) const
 {
     if( obj == NULL )
     {
@@ -87,19 +87,19 @@ bool Value::operator==(const Value* obj)
     {
         case ARRAY:
         {
-            Array* a1 = dynamic_cast<Array*>(this);
+            const Array* a1 = dynamic_cast<const Array*>(this);
             const Array* a2 = dynamic_cast<const Array*>(obj);
             return *a1 == a2;
         }
         case BOOL:
         {
-            Bool* b1 = dynamic_cast<Bool*>(this);
+            const Bool* b1 = dynamic_cast<const Bool*>(this);
             const Bool* b2 = dynamic_cast<const Bool*>(obj);
             return *b1 == b2;
         }
         case STRING:
         {
-            String* a1 = dynamic_cast<String*>(this);
+            const String* a1 = dynamic_cast<const String*>(this);
             const String* a2 = dynamic_cast<const String*>(obj);
             return *a1 == a2;
         }
@@ -107,13 +107,13 @@ bool Value::operator==(const Value* obj)
             return true;
         case OBJECT:
         {
-            Object* a1 = dynamic_cast<Object*>(this);
+            const Object* a1 = dynamic_cast<const Object*>(this);
             const Object* a2 = dynamic_cast<const Object*>(obj);
             return *a1 == a2;
         }
         case NUMBER:
         {
-            Number* a1 = dynamic_cast<Number*>(this);
+            const Number* a1 = dynamic_cast<const Number*>(this);
             const Number* a2 = dynamic_cast<const Number*>(obj);
             return *a1 == a2;
         }
@@ -123,7 +123,7 @@ bool Value::operator==(const Value* obj)
     return false;
 }
 
-bool Value::operator!=(const Value* obj)
+bool Value::operator!=(const Value* obj) const
 {
     return !(*this == obj);
 }

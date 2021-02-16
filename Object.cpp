@@ -50,7 +50,7 @@ Object* Object::operator=(const Object* o)
     return this;
 }
 
-bool Object::operator==(const Object* a)
+bool Object::operator==(const Object* a) const
 {
     if( _items.size() != a->_items.size())
     {

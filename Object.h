@@ -51,7 +51,7 @@ public:
     const Value* operator[](unsigned int index) const;
 
     Object* operator=(const Object* o);
-    bool operator==(const Object* o);
+    bool operator==(const Object* o) const;
 
     // Give integer as index to get a key;
     bool key(unsigned int index, std::string& out);

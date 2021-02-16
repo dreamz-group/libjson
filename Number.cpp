@@ -76,7 +76,7 @@ Number* Number::operator=(const Number* v)
     return this;
 }
 
-bool Number::operator==(const Number* v)
+bool Number::operator==(const Number* v) const
 {
     return memcmp(&_value, &v->_value, sizeof(_Number_Value)) == 0;
 }

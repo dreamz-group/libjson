@@ -42,7 +42,7 @@ public:
     virtual std::string str() const;
     Value* operator[](unsigned int index);
     Array* operator=(const Array* a);
-    bool operator==(const Array* a);
+    bool operator==(const Array* a) const;
     void Add(Value* value);
     void Add(const char* value);
     void Add(const std::string& value);

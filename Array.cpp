@@ -52,7 +52,7 @@ Array* Array::operator=(const Array* a)
     return this;
 }
 
-bool Array::operator==(const Array* a)
+bool Array::operator==(const Array* a) const
 {
     if( _items.size() != a->_items.size())
     {
