@@ -69,7 +69,7 @@ public:
     virtual Value* _find( SPATH& spath) const = 0;
     bool operator==(const Value* obj);
     bool operator!=(const Value* obj);
-    Value* Clone();
+    Value* Clone() const;
 protected:
     static Value* Clone(const Value* v);
 };

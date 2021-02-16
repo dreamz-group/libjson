@@ -45,7 +45,7 @@ Value::~Value()
 {
 }
 
-Value* Value::Clone()
+Value* Value::Clone() const
 {
     return Clone(this);
 }
