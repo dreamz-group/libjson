@@ -43,12 +43,12 @@ public:
     virtual type_t getType() const;
     static Value* parse(uint8_t*& b, size_t& max, uint32_t& line);
     static bool parse_string(std::string& id, uint8_t*& b, size_t& max, uint32_t& line);
-    inline bool operator==(const char* str) { return _value == str; }
-    inline bool operator!=(const char* str) { return _value != str; }
-    inline bool operator==(const std::string& str) { return _value == str; }
-    inline bool operator!=(const std::string& str) { return _value != str; }
-    inline bool operator==(const String& str) { return _value == str._value; }
-    inline bool operator!=(const String& str) { return _value != str._value; }
+    inline bool operator==(const char* str) const { return _value == str; }
+    inline bool operator!=(const char* str) const { return _value != str; }
+    inline bool operator==(const std::string& str) const { return _value == str; }
+    inline bool operator!=(const std::string& str) const { return _value != str; }
+    inline bool operator==(const String& str) const { return _value == str._value; }
+    inline bool operator!=(const String& str) const { return _value != str._value; }
     String* operator=(const String* v);
     String& operator=(const char* str);
     String& operator=(std::string& str);
